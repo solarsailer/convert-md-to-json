@@ -1,0 +1,30 @@
+{
+  "name": "convert-md-to-json",
+  "version": "0.0.0",
+  "description": "Convert Markdown files to JSON",
+  "license": "MIT",
+  "repository": "solarsailer/convert-md-to-json",
+  "author": {
+    "name": "Matthieu Oger",
+    "url": "solarsailer.net"
+  },
+  "keywords": [
+    "markdown",
+    "json",
+    "converter"
+  ],
+  "scripts": {
+    "start": "",
+    "test": "standard | snazzy",
+    "prepush": "yarn test"
+  },
+  "dependencies": {
+    "front-matter": "^2.1.2",
+    "marked": "^0.3.6"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.2"
+  }
+}
