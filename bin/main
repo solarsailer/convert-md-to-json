@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+const {find} = require('../src/index')
+
+// -------------------------------------------------------------
+// Module.
+// -------------------------------------------------------------
+
+const [,, cwd, destination] = process.argv
+
+find(cwd, destination)
