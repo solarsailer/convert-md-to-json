@@ -6,6 +6,7 @@ const fs = require('fs')
 const readFile = util.promisify(fs.readFile)
 const {resolve: resolvePath, extname} = require('path')
 
+const ora = require('ora')
 const fm = require('front-matter')
 const marked = require('marked')
 
@@ -42,7 +43,6 @@ const replaceExtension = (filename, newExt) => {
 const createWriter =
   destination =>
     obj => {
-      console.log(`Writing ${obj.path}`)
       fs.writeFileSync(
         resolvePath(destination, obj.path),
         toPrettyString(obj)
@@ -62,7 +62,7 @@ function find (
     ignore: IGNORE_LIST
   }
 
-  console.log(`Looking for Markdown files in ${options.cwd}…`)
+  const spinner = ora(`Looking for Markdown files in ${options.cwd}…`).start()
 
   glob('**/*.md', options, (err, paths) => {
     if (err) {
@@ -74,10 +74,12 @@ function find (
       paths.map(convert)
     ).then(bodies => {
       const write = createWriter(destination)
-      bodies.forEach(write)
+      bodies.forEach(obj => {
+        spinner.text = `Writing ${obj.path}…`
+        write(obj)
+      })
 
-      console.log('')
-      console.log('Done!')
+      spinner.succeed('Done!')
     }).catch(() => console.error('error while writing files'))
   })
 }
